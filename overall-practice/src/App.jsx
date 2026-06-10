@@ -167,31 +167,531 @@
 //7. Lists and Keys
 //Rendering a list of items using the map function. Keys help React identify which items changed.
 
-function ListsExample() {
-  const fruits = ["Apple", "Banana", "Mango", "Orange"];
-  const students = [
-    { id: 1, name: "Gul", grade: "A" },
-    { id: 2, name: "Kami", grade: "B" },
-    { id: 3, name: "Ahmad", grade: "C" },
-  ];
+// function ListsExample() {
+//   const fruits = ["Apple", "Banana", "Mango", "Orange"];
+//   const students = [
+//     { id: 1, name: "Gul", grade: "A" },
+//     { id: 2, name: "Kami", grade: "B" },
+//     { id: 3, name: "Ahmad", grade: "C" },
+//   ];
+//   return (
+//     <>
+//       <h2>Fruits</h2>
+//       <ul>
+//         {fruits.map((fruit) => (
+//           <li key={fruit}>{fruit}</li>
+//         ))}
+//       </ul>
+
+//       <h2>Students</h2>
+//       {students.map((student) => (
+//         <div key={student.id}>
+//           <p>
+//             {student.name}-Grade: {student.grade}
+//           </p>
+//         </div>
+//       ))}
+//     </>
+//   );
+// }
+// export default ListsExample;
+
+//8. Forms and Controlled Components
+//In controlled components, React state controls the form input values at all times.
+// import { useState } from "react";
+// function RegistrationForm() {
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     email: "",
+//     gender: "",
+//     agree: false,
+//   });
+
+//   // One single handler for all inputs
+//   function handleChange(event) {
+//     const { name, value, type, checked } = event.target;
+//     setFormData({
+//       ...formData,
+//       [name]: type === "checkbox" ? checked : value,
+//     });
+//   }
+
+//   function handleSubmit(event) {
+//     event.preventDefault();
+//     console.log("Form is submitted:", formData);
+//     alert(`Welcome ${formData.name}!`);
+//   }
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <input
+//         type="text"
+//         name="name"
+//         placeholder="Your Name"
+//         value={formData.name}
+//         onChange={handleChange}
+//       ></input>
+//       <input
+//         type="text"
+//         name="email"
+//         placeholder="Your Email"
+//         value={formData.email}
+//         onChange={handleChange}
+//       ></input>
+//       <select name="gender" value={formData.gender} onChange={handleChange}>
+//         <option value="">Select Gender</option>
+//         <option value="male">Male</option>
+//         <option value="female">Female</option>
+//       </select>
+
+//       <label>
+//         <input
+//           type="checkbox"
+//           name="agree"
+//           checked={formData.agree}
+//           onChange={handleChange}
+//         ></input>
+//         I agree to terms
+//       </label>
+
+//       <button type="submit">Register</button>
+//     </form>
+//   );
+// }
+// export default RegistrationForm;
+
+//9. Basic Styling — CSS, Inline Styles, className, and Tailwind CSS
+
+// import "./styles.css";
+
+// import ExternalStyling from "./components/ExternalStyling";
+// import InlineStyling from "./components/InlineStyling";
+// import TailwindStyling from "./components/TailwindStyling";
+
+// function App() {
+//   return (
+//     <>
+//       <ExternalStyling />
+//       <InlineStyling />
+//       <TailwindStyling />
+//     </>
+//   );
+// }
+
+// export default App;
+
+//10. React Developer Tools and Debugging Basics
+//No code to install — this is a browser extension. But here is how you debug in code:
+// import { useState, useEffect } from "react";
+
+// function DebuggingExample() {
+//   const [count, setCount] = useState(0);
+//   const [name, setName] = useState("Ahmed");
+
+//   // console.log runs every time the component re-renders
+//   console.log("Component re-rendered. Count is:", count);
+
+//   // useEffect with console.log to watch a specific value change
+//   useEffect(() => {
+//     console.log("Count changed to:", count);
+//   }, [count]); // only runs when count changes
+
+//   return (
+//     <div>
+//       <h2>Count: {count}</h2>
+//       <button onClick={() => setCount(count + 1)}>Increase</button>
+
+//       {/* You can also temporarily show state values directly on screen for debugging */}
+//       <pre>{JSON.stringify({ count, name }, null, 2)}</pre>
+//     </div>
+//   );
+// }
+
+// export default DebuggingExample;
+
+//11. useEffect Hook and Lifecycle Understanding
+//useEffect runs side effects in your component. It replaces lifecycle methods //like componentDidMount, componentDidUpdate, and componentWillUnmount.
+
+// import { useState, useEffect } from 'react';
+
+// function LifecycleExample() {
+//   const [count, setCount] = useState(0);
+//   const [name, setName] = useState('Ahmed');
+
+//   // Runs once when component mounts (like componentDidMount)
+//   useEffect(() => {
+//     console.log('Component mounted');
+//   }, []);
+
+//   // Runs every time count changes (like componentDidUpdate)
+//   useEffect(() => {
+//     console.log('Count changed to:', count);
+//   }, [count]);
+
+//   // Runs every time any state changes (no dependency array)
+//   useEffect(() => {
+//     console.log('Component re-rendered');
+//   });
+
+//   // Cleanup function runs when component unmounts (like componentWillUnmount)
+//   useEffect(() => {
+//     const timer = setInterval(() => {
+//       console.log('Timer running');
+//     }, 1000);
+
+//     // This cleanup runs when component is removed from screen
+//     return () => {
+//       clearInterval(timer);
+//       console.log('Component unmounted, timer cleared');
+//     };
+//   }, []);
+
+//   return (
+//     <div>
+//       <h2>Count: {count}</h2>
+//       <button onClick={() => setCount(count + 1)}>Increase</button>
+//       <input
+//         value={name}
+//         onChange={(e) => setName(e.target.value)}
+//         placeholder="Type name"
+//       />
+//     </div>
+//   );
+// }
+
+// export default LifecycleExample;
+
+//12. Context API
+// Context API lets you share data across many //components without passing props manually through every level.
+// import { createContext, useContext, useState } from 'react';
+
+// // Step 1 — Create the context
+// const UserContext = createContext();
+
+// // Step 2 — Create a provider component that wraps your app
+// function UserProvider({ children }) {
+//   const [user, setUser] = useState({ name: 'Ahmed', role: 'Admin' });
+
+//   return (
+//     <UserContext.Provider value={{ user, setUser }}>
+//       {children}
+//     </UserContext.Provider>
+//   );
+// }
+
+// // Step 3 — Any component deep inside can read from context
+// function Navbar() {
+//   const { user } = useContext(UserContext);
+//   return <h2>Logged in as: {user.name} ({user.role})</h2>;
+// }
+
+// function Profile() {
+//   const { user, setUser } = useContext(UserContext);
+
+//   return (
+//     <div>
+//       <p>Profile Name: {user.name}</p>
+//       <button onClick={() => setUser({ name: 'Sara', role: 'User' })}>
+//         Switch User
+//       </button>
+//     </div>
+//   );
+// }
+
+// // Step 4 — Wrap your components inside the provider
+// function App() {
+//   return (
+//     <UserProvider>
+//       <Navbar />
+//       <Profile />
+//     </UserProvider>
+//   );
+// }
+
+// export default App;
+
+//13. Lifting State Up
+//When two sibling components need the same data, move the state
+//  up to their common parent and pass it down as props.
+// import { useState } from "react";
+// // Both components need to share the same temperature value
+// // So we lift the state up to the parent App component
+// function CelsiusInput({ celsius, onCelsiusChange }) {
+//   return (
+//     <>
+//       <label>Celsius:</label>
+//       <input
+//         type="number"
+//         value={celsius}
+//         onChange={(e) => onCelsiusChange(e.target.value)}
+//       />
+//     </>
+//   );
+// }
+// function FahrenheitDisplay({ celsius }) {
+//   const fahrenheit = (celsius * 9) / +32;
+//   return <p>Farhenheit:{fahrenheit}</p>;
+// }
+// function App() {
+//   const [celsius, setCelsius] = useState(0);
+//   return (
+//     <>
+//       <h2>Temperature Convertor</h2>
+//       <CelsiusInput celsius={celsius} onCelsiusChange={setCelsius} />
+//       <FahrenheitDisplay celsius={celsius} />
+//     </>
+//   );
+// }
+// export default App;
+
+//14. React Router
+//React Router lets you navigate between different pages without reloading the browser.
+// import {
+//   BrowserRouter,
+//   Routes,
+//   Route,
+//   Link,
+//   useParams,
+//   useNavigate,
+// } from "react-router-dom";
+// //Page Components:
+// function Home() {
+//   const navigate = useNavigate();
+//   return (
+//     <>
+//       <h2>Home</h2>
+//       <button onClick={() => navigate("/About")}>Go to About</button>
+//     </>
+//   );
+// }
+// function About() {
+//   return <h2>About Page</h2>;
+// }
+// function Products() {
+//   const products = [
+//     { id: 1, name: "Laptop" },
+//     { id: 2, name: "Phone" },
+//   ];
+//   return (
+//     <>
+//       <h2>Poducts</h2>
+//       {products.map((p) => (
+//         <div key={p.id}>
+//           <Link to={`/products/${p.id}`}>{p.name}</Link>
+//         </div>
+//       ))}
+//     </>
+//   );
+// }
+
+// function ProductDetails() {
+//   const { id } = useParams();
+//   return <h2>Showing details for product ID:{id}</h2>;
+// }
+// function NotFound() {
+//   return <h2>404-Page not found</h2>;
+// }
+
+// function Navbar() {
+//   return (
+//     <nav>
+//       <Link to="/">Home</Link> | {""}
+//       <Link to="/about">About</Link>| {""}
+//       <Link to="/products">Products</Link>| {""}
+//     </nav>
+//   );
+// }
+
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Navbar />
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/about" element={<About />} />
+//         <Route path="products" element={<Products />} />
+//         <Route path="/products/:id" element={<ProductDetails />} />
+//         <Route path="*" element={<NotFound />} />
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+// export default App;
+
+//15. Handling APIs — fetch demo and Axios demo
+//Demo 1 — Using fetch
+// import { useState, useEffect } from "react";
+// function FetchDemo() {
+//   const [users, setUsers] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     fetch("https://jsonplaceholder.typicode.com/users")
+//       .then((response) => response.json())
+//       .then((data) => {
+//         setUsers(data);
+//         setLoading(false);
+//       })
+//       .catch((err) => {
+//         setError("Something is wrong");
+//         setLoading(false);
+//       });
+//   }, []);
+
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p>{error}</p>;
+//   return (
+//     <>
+//       <h2>Users from API (fetch)</h2>
+//       {users.map((user) => (
+//         <div key={user.id}>
+//           <p>
+//             {user.name}-{user.email}
+//           </p>
+//         </div>
+//       ))}
+//     </>
+//   );
+// }
+
+// export default FetchDemo;
+
+//Demo 2 — Using Axios
+//import { useState, useEffect } from "react";
+// import axios from "axios";
+
+// function AxiosDemo() {
+//   const [posts, setPosts] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     // Axios automatically parses JSON, no need for .json()
+//     axios
+//       .get("https://jsonplaceholder.typicode.com/posts?_limit=5")
+//       .then((response) => {
+//         setPosts(response.data);
+//         setLoading(false);
+//       })
+//       .catch((err) => {
+//         setError("Failed to fetch posts");
+//         setLoading(false);
+//       });
+//   }, []);
+
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p>{error}</p>;
+
+//   return (
+//     <div>
+//       <h2>Posts from API (Axios)</h2>
+//       {posts.map((post) => (
+//         <div key={post.id}>
+//           <h4>{post.title}</h4>
+//           <p>{post.body}</p>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
+// export default AxiosDemo;
+
+//16. Custom Hooks
+//A custom hook is just a function that starts with "use" and contains reusable logic.
+// import { useState, useEffect } from "react";
+// function useFetch(url) {
+//   const [data, setData] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   useEffect(() => {
+//     fetch(url)
+//       .then((res) => res.json())
+//       .then((result) => {
+//         setData(result);
+//         setLoading(false);
+//       })
+//       .catch(() => {
+//         setError("Failed to fetch");
+//         setLoading(false);
+//       });
+//   }, [url]);
+//   return { data, loading, error };
+// }
+
+// function useLocalStorage(key, initialValue) {
+//   const [value, setValue] = useState(() => {
+//     const saved = localStorage.getItem(key);
+//     return saved ? JSON.parse(saved) : initialValue;
+//   });
+
+//   function updateValue(newValue) {
+//     setValue(newValue);
+//     localStorage.setItem(key, JSON.stringify(newValue));
+//   }
+//   return [value, updateValue];
+// }
+
+// function App() {
+//   const { data, loading, error } = useFetch(
+//     "https://jsonplaceholder.typicode.com/users/1",
+//   );
+//   const [username, setUsername] = useLocalStorage("username", "");
+
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p>{error}</p>;
+//   return (
+//     <>
+//       <h2>User from Custom useFetch hook:</h2>
+//       <p>{data.name}</p>
+//       <p>{data.email}</p>
+//       <h2>saved Username(persists after refresh):</h2>
+//       <input
+//         value={username}
+//         onChange={(e) => setUsername(e.target.value)}
+//         placeholder="Type a username"
+//       />
+//       <p>Saved: {username}</p>
+//     </>
+//   );
+// }
+
+// export default App;
+
+//17. Memoization — React.memo, useMemo, useCallback
+//These tools prevent unnecessary re-renders and recalculations to improve performance.
+
+import { useState, useMemo, useCallback, memo } from "react";
+const ChildComponent = memo(function ChildComponent({ name, onGreet }) {
+  console.log("ChildComponent rendered");
   return (
     <>
-      <h2>Fruits</h2>
-      <ul>
-        {fruits.map((fruit) => (
-          <li key={fruit}>{fruit}</li>
-        ))}
-      </ul>
-
-      <h2>Students</h2>
-      {students.map((student) => (
-        <div key={student.id}>
-          <p>
-            {student.name}-Grade: {student.grade}
-          </p>
-        </div>
-      ))}
+      <p>Child name:{name}</p>
+      <button onClick={onGreet}>Greet</button>
+    </>
+  );
+});
+function App() {
+  const [count, setCount] = useState(0);
+  const [name] = useState("Ahmad");
+  const expensiveValue = useMemo(() => {
+    let total = 0;
+    for (let i = 0; i < 100; i++) {
+      total += i;
+    }
+    return total + count;
+  }, [count]);
+  const handleGreet = useCallback(() => {
+    alert(`Hello ${name}`);
+  }, [name]);
+  return (
+    <>
+      <h2>Count:{count}</h2>
+      <button onClick={() => setCount(count + 1)}>Increase Count</button>
+      <p>Expensive Value: {expensiveValue}</p>
+      <ChildComponent name={name} onGreet={handleGreet}></ChildComponent>
     </>
   );
 }
-export default ListsExample;
+export default App;
