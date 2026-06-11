@@ -662,36 +662,288 @@
 //17. Memoization — React.memo, useMemo, useCallback
 //These tools prevent unnecessary re-renders and recalculations to improve performance.
 
-import { useState, useMemo, useCallback, memo } from "react";
-const ChildComponent = memo(function ChildComponent({ name, onGreet }) {
-  console.log("ChildComponent rendered");
-  return (
-    <>
-      <p>Child name:{name}</p>
-      <button onClick={onGreet}>Greet</button>
-    </>
-  );
-});
-function App() {
-  const [count, setCount] = useState(0);
-  const [name] = useState("Ahmad");
-  const expensiveValue = useMemo(() => {
-    let total = 0;
-    for (let i = 0; i < 100; i++) {
-      total += i;
-    }
-    return total + count;
-  }, [count]);
-  const handleGreet = useCallback(() => {
-    alert(`Hello ${name}`);
-  }, [name]);
-  return (
-    <>
-      <h2>Count:{count}</h2>
-      <button onClick={() => setCount(count + 1)}>Increase Count</button>
-      <p>Expensive Value: {expensiveValue}</p>
-      <ChildComponent name={name} onGreet={handleGreet}></ChildComponent>
-    </>
-  );
-}
-export default App;
+// import { useState, useMemo, useCallback, memo } from "react";
+// const ChildComponent = memo(function ChildComponent({ name, onGreet }) {
+//   console.log("ChildComponent rendered");
+//   return (
+//     <>
+//       <p>Child name:{name}</p>
+//       <button onClick={onGreet}>Greet</button>
+//     </>
+//   );
+// });
+// function App() {
+//   const [count, setCount] = useState(0);
+//   const [name] = useState("Ahmad");
+//   const expensiveValue = useMemo(() => {
+//     let total = 0;
+//     for (let i = 0; i < 100; i++) {
+//       total += i;
+//     }
+//     return total + count;
+//   }, [count]);
+//   const handleGreet = useCallback(() => {
+//     alert(`Hello ${name}`);
+//   }, [name]);
+//   return (
+//     <>
+//       <h2>Count:{count}</h2>
+//       <button onClick={() => setCount(count + 1)}>Increase Count</button>
+//       <p>Expensive Value: {expensiveValue}</p>
+//       <ChildComponent name={name} onGreet={handleGreet}></ChildComponent>
+//     </>
+//   );
+// }
+// export default App;
+
+//18. Advanced Hooks — useReducer, useLayoutEffect, useRef
+// import { useReducer, useLayoutEffect, useRef, useState } from "react";
+
+// // ---- useReducer ----
+// // Good for complex state logic with multiple actions
+// // Works like Redux but local to one component
+
+// const initialState = { count: 0, name: "Ahmed" };
+
+// function reducer(state, action) {
+//   switch (action.type) {
+//     case "increment":
+//       return { ...state, count: state.count + 1 };
+//     case "decrement":
+//       return { ...state, count: state.count - 1 };
+//     case "reset":
+//       return initialState;
+//     case "changeName":
+//       return { ...state, name: action.payload };
+//     default:
+//       return state;
+//   }
+// }
+
+// function ReducerExample() {
+//   const [state, dispatch] = useReducer(reducer, initialState);
+
+//   return (
+//     <div>
+//       <h2>Count: {state.count}</h2>
+//       <p>Name: {state.name}</p>
+//       <button onClick={() => dispatch({ type: "increment" })}>+</button>
+//       <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+//       <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
+//       <button onClick={() => dispatch({ type: "changeName", payload: "Sara" })}>
+//         Change Name
+//       </button>
+//     </div>
+//   );
+// }
+
+// // ---- useRef ----
+// // Two main uses: accessing a DOM element directly, and storing a value
+// // that does not cause a re-render when it changes
+
+// function RefExample() {
+//   const inputRef = useRef(null);
+//   const countRef = useRef(0); // this does not cause re-render
+
+//   function focusInput() {
+//     inputRef.current.focus(); // directly accesses the DOM input element
+//   }
+
+//   function incrementWithoutRerender() {
+//     countRef.current += 1;
+//     console.log("Ref count:", countRef.current); // updates silently
+//   }
+
+//   return (
+//     <div>
+//       <input ref={inputRef} placeholder="Click button to focus me" />
+//       <button onClick={focusInput}>Focus Input</button>
+//       <button onClick={incrementWithoutRerender}>
+//         Increment without re-render
+//       </button>
+//     </div>
+//   );
+// }
+
+// // ---- useLayoutEffect ----
+// // Same as useEffect but fires synchronously after DOM updates
+// // Use it when you need to measure or change the DOM before the browser paints
+
+// function LayoutEffectExample() {
+//   const boxRef = useRef(null);
+//   const [width, setWidth] = useState(0);
+
+//   useLayoutEffect(() => {
+//     // Reads the DOM size before browser paints to screen
+//     // This prevents any visual flicker
+//     const boxWidth = boxRef.current.offsetWidth;
+//     setWidth(boxWidth);
+//   }, []);
+
+//   return (
+//     <div>
+//       <div
+//         ref={boxRef}
+//         style={{ width: "300px", background: "lightblue", padding: "10px" }}
+//       >
+//         This box is measured before paint
+//       </div>
+//       <p>Box width measured by useLayoutEffect: {width}px</p>
+//     </div>
+//   );
+// }
+
+// function App() {
+//   return (
+//     <div>
+//       <ReducerExample />
+//       <RefExample />
+//       <LayoutEffectExample />
+//     </div>
+//   );
+// }
+
+// export default App;
+
+//19. Error Boundaries
+//Error boundaries catch JavaScript errors in child components and show a fallback UI
+// instead of crashing the whole app. They must be class components.
+// import { useState } from "react";
+// import { Component } from "react";
+// //Error boundaries must be class components
+// class ErrorBoundary extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { hasError: false, errorMessage: "" };
+//   }
+//   //Runs when a child component throws an error
+//   static getDerivedStateFromError(error) {
+//     return { hasError: true, errorMessage: error.message };
+//   }
+
+//   //You can also log the error here
+//   componentDidCatch(error, info) {
+//     console.log("Error Caught:", error);
+//     console.log("Component stack:", info.componentStack);
+//   }
+
+//   render() {
+//     if (this.state.hasError) {
+//       return (
+//         <>
+//           <h2>Something went wrong</h2>
+//           <p>{this.state.errorMessage}</p>
+//           <button onClick={() => this.setState({ hasError: false })}>
+//             Try Again
+//           </button>
+//         </>
+//       );
+//     }
+//     return this.props.children;
+//   }
+// }
+// //This component will crash on purpose
+// function BuggyComponent() {
+//   const [crash, setCrash] = useState(false);
+//   if (crash) {
+//     throw new Error("I crashed on  purpose!");
+//   }
+//   return (
+//     <>
+//       <p>This component is working fine</p>
+//       <button onClick={() => setCrash(true)}>Crash the component</button>
+//     </>
+//   );
+// }
+
+// function App() {
+//   return (
+//     <>
+//       <h1>Error Boundary Demo</h1>
+//       <ErrorBoundary>
+//         <BuggyComponent />
+//       </ErrorBoundary>
+//     </>
+//   );
+// }
+// export default App;
+
+//20. Redux and Redux Toolkit Counter
+//Demo 1 — Plain Redux counter
+// App.js — plain Redux
+// import { useSelector, useDispatch } from 'react-redux';
+
+// function App() {
+//   const count = useSelector((state) => state.count);
+//   const dispatch = useDispatch();
+
+//   return (
+//     <div>
+//       <h2>Plain Redux Counter</h2>
+//       <h3>Count: {count}</h3>
+//       <button onClick={() => dispatch({ type: 'INCREMENT' })}>+</button>
+//       <button onClick={() => dispatch({ type: 'DECREMENT' })}>-</button>
+//       <button onClick={() => dispatch({ type: 'RESET' })}>Reset</button>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+// App.js — Redux Toolkit
+// import { useSelector, useDispatch } from "react-redux";
+// import { increment, decrement, reset, incrementByAmount } from "./counterSlice";
+
+// function App() {
+//   const count = useSelector((state) => state.counter.count);
+//   const dispatch = useDispatch();
+
+//   return (
+//     <div>
+//       <h2>Redux Toolkit Counter</h2>
+//       <h3>Count: {count}</h3>
+//       <button onClick={() => dispatch(increment())}>+</button>
+//       <button onClick={() => dispatch(decrement())}>-</button>
+//       <button onClick={() => dispatch(reset())}>Reset</button>
+//       <button onClick={() => dispatch(incrementByAmount(5))}>+5</button>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+//21. Performance Optimization — Lazy Loading and Code Splitting
+//By default React loads all components at once. Lazy loading means a component only loads when it is actually needed.
+
+//Without LazyLoading:
+// import About from "./About";
+// //👉 Problem: About component is loaded even if user never visits it
+// function App() {
+//   return (
+//     <div>
+//       <About />
+//     </div>
+//   );
+// }
+// export default App;
+
+//With Lazy Loading(Code Splitting):
+// import { Suspense, lazy } from "react";
+
+// // Lazy load the component
+// const About = lazy(() => import("./About"));
+
+// function App() {
+//   return (
+//     <div>
+//       <h1>Home Page</h1>
+
+//       {/* Suspense shows fallback while loading */}
+//       <Suspense fallback={<p>Loading page...</p>}>
+//         <About />
+//       </Suspense>
+//     </div>
+//   );
+// }
+
+// export default App;
