@@ -932,6 +932,9 @@
 
 // // Lazy load the component
 // const About = lazy(() => import("./About"));
+// import { Component } from 'react';
+// import { Component } from 'react';
+// import { use } from 'react';
 
 // function App() {
 //   return (
@@ -947,3 +950,324 @@
 // }
 
 // export default App;
+
+//22. Higher Order Components (HOCs)
+//A HOC is a function that takes a component and returns a new enhanced component.
+//HOC that adds a loading state to any component
+// HOC that adds a loading state to any component
+// function withLoading(Component) {
+//   return function ({ isLoading, ...props }) {
+//     if (isLoading) return <p>Loading...</p>;
+//     return <Component {...props} />;
+//   };
+// }
+
+// function UserList({ users }) {
+//   return (
+//     <ul>
+//       {users.map((u) => (
+//         <li key={u.id}>{u.name}</li>
+//       ))}
+//     </ul>
+//   );
+// }
+
+// const UserListWithLoading = withLoading(UserList);
+
+// function App() {
+//   return (
+//     <UserListWithLoading
+//       isLoading={false}
+//       users={[
+//         { id: 1, name: "Ahmed" },
+//         { id: 2, name: "Sara" },
+//       ]}
+//     />
+//   );
+// }
+
+// export default App;
+
+//23.AOS Library (Animate On Scroll)
+//AOS is a JavaScript library that adds animations to elements when you scroll the page.
+// function App() {
+//   return (
+//     <>
+//       <div
+//         data-aos="fade-up"
+//         style={{ margin: "200px ", padding: "2rem", background: "#e0f7e9" }}
+//       >
+//         Fade Up
+//       </div>
+//       <div
+//         data-aos="fade-right"
+//         style={{ margin: "200px 0", padding: "2rem", background: "#cce5ff" }}
+//       >
+//         Fade Right
+//       </div>
+//       <div
+//         data-aos="zoom-in"
+//         style={{ margin: "200px 0", padding: "2rem", background: "#f8d7da" }}
+//       >
+//         Zoom in
+//       </div>
+//     </>
+//   );
+// }
+
+// export default App;
+
+//24.React Hook Form (Simple Explanation)
+//react-hook-form is a library that helps you manage forms in React easily and efficiently.
+// import { useForm } from "react-hook-form";
+// function App() {
+//   const { register, handleSubmit } = useForm();
+//   const onSubmit = (data) => {
+//     console.log(data);
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       <input {...register("name")} placeholder="Enter name" />
+//       <input {...register("email")} placeholder="Enter Email" />
+//       <button type="submit">Submit</button>
+//     </form>
+//   );
+// }
+// export default App;
+
+//25.React Drag and Drop (Simple Explanation)
+//React Drag and Drop packages let you move items on the screen using mouse dragging.
+// import React, { useState } from "react";
+// import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+
+// function App() {
+//   const [items, setItems] = useState([
+//     { id: 1, text: "Apple" },
+//     { id: 2, text: "Banana" },
+//     { id: 3, text: "Mango" },
+//   ]);
+
+//   function handleDragEnd(result) {
+//     if (!result.destination) return;
+
+//     const newItems = Array.from(items);
+//     const [movedItem] = newItems.splice(result.source.index, 1);
+//     newItems.splice(result.destination.index, 0, movedItem);
+
+//     setItems(newItems);
+//   }
+
+//   return (
+//     <DragDropContext onDragEnd={handleDragEnd}>
+//       <Droppable droppableId="list">
+//         {(provided) => (
+//           <ul ref={provided.innerRef} {...provided.droppableProps}>
+//             {items.map((item, index) => (
+//               <Draggable
+//                 key={item.id}
+//                 draggableId={item.id.toString()}
+//                 index={index}
+//               >
+//                 {(provided) => (
+//                   <li
+//                     ref={provided.innerRef}
+//                     {...provided.draggableProps}
+//                     {...provided.dragHandleProps}
+//                     style={{
+//                       padding: "10px",
+//                       margin: "5px",
+//                       background: "lightblue",
+//                       ...provided.draggableProps.style,
+//                     }}
+//                   >
+//                     {item.text}
+//                   </li>
+//                 )}
+//               </Draggable>
+//             ))}
+//             {provided.placeholder}
+//           </ul>
+//         )}
+//       </Droppable>
+//     </DragDropContext>
+//   );
+// }
+
+// export default App;
+
+//26. React Query (Simple Explanation)
+//React Query is a library that helps you fetch, cache, and manage server data easily in React.
+// import {useQuery } from "@tanstack/react-query";
+// function App() {
+//   const fetchUsers = async () => {
+//     const res = await fetch("https://jsonplaceholder.typicode.com/users");
+//     return res.json();
+//   };
+//   const { data, isLoading, error } = useQuery({
+//     queryKey: ["users"],
+//     queryFn: fetchUsers,
+//   });
+//   if (isLoading) return <p>Loading...</p>;
+//   if (error) return <p>Error Loading data</p>;
+//   return (
+//     <>
+//       <h2>Users List(React Querry)</h2>
+//       {data.map((user) => (
+//         <p key={user.id}>
+//           {user.name}-{user.email}
+//         </p>
+//       ))}
+//     </>
+//   );
+// }
+// export default App;
+
+//27. Render Props Pattern (Simple Explanation)
+//Render props is a React pattern where you pass a function as a prop to control what a component renders.
+// import React from "react";
+// //Child Component
+// function Box({render}){
+//   return(
+//     <div style={{border:"2px solid black",padding:"10px"}}>
+//       {render()}
+//     </div>
+//   );
+// }
+// //Parent Component
+// function App(){
+//   return(
+//     <div>
+//       <h2>Render Props Example</h2>
+//       <Box
+//       render={()=>{
+//         return <h3>Hello from Render Props</h3>
+//       }}/>
+//       <Box
+//       render={()=>{
+//         return <p>This is dynamic UI content</p>
+//       }}/>
+//     </div>
+//   )
+// }
+// export default App;
+
+//28. 🚀 Advanced Performance Optimization (Simple Explanation)
+//In React, performance optimization means:
+//👉 Making your app fast and smooth by avoiding extra work.
+//🧠 1. Profiling
+// 👉 Checking which components are slow or re-rendering too much
+// ✔ Tool: React DevTools Profiler
+// ✔ Helps find performance problems
+// 🧠 2. Memoization
+// 👉 Storing results so React does not re-calculate again and again
+// Types:
+// React.memo → stops unnecessary component re-render
+// useMemo → saves expensive calculation result
+// useCallback → saves function so it doesn’t change every render
+// 🧠 3. Unnecessary Rendering
+// 👉 React re-renders components even when not needed
+// ✔ Optimization = stop useless re-renders
+// import React, { useState, useMemo, useCallback, memo } from "react";
+// //Child component (memo prevents unnecessary re-render)
+// const Child = memo(({ onClick }) => {
+//   console.log("Child rerendered");
+//   return <button onClick={onClick}>Click Me</button>;
+// });
+
+// function App() {
+//   const [count, setCount] = useState(0);
+//   //useMemo-> expensive calculation runs only when count changes
+//   const expensiveValue = useMemo(() => {
+//     console.log("Calcualting...");
+//     return count * 1000;
+//   }, [count]);
+
+//   //useCallback-> function does not change every render
+//   const handleClick = useCallback(() => {
+//     alert("Button Clicked");
+//   }, []);
+
+//   return (
+//     <>
+//       <h2> Count:{count}</h2>
+//       <h3>Value:{expensiveValue}</h3>
+//       <button onClick={() => setCount(count + 1)}>increase count</button>
+//       <Child onClick={handleClick} />
+//     </>
+//   );
+// }
+// export default App;
+
+//29.1. React Suspense (Simple Explanation)
+//Suspense lets React show a fallback UI (like a loading message or spinner) while waiting for something to load.
+// import React, { lazy, Suspense } from "react";
+// const About = lazy(() => import("./About"));
+// function App() {
+//   return (
+//     <>
+//       <h1>React Suspense Example</h1>
+//       <Suspense fallback={<p>Loading...</p>}>
+//         <About />
+//       </Suspense>
+//     </>
+//   );
+// }
+// export default App;
+
+//29.2.Concurrent Mode
+//Concurrent features help React keep the UI responsive when heavy work is happening.
+// import { useState, useTransition } from "react";
+// function App() {
+//   const [text, setText] = useState("");
+//   const [list, setList] = useState([]);
+//   const [isPending, startTransition] = useState();
+//   function handleChange(e) {
+//     setText(e.target.value);
+//     startTransition(() => {
+//       const items = [];
+//       for (let i = 0; i < 10; i++) {
+//         items.push(e.target.value);
+//       }
+//       setList(items);
+//     });
+//   }
+//   return (
+//     <div>
+//       <input
+//         value={text}
+//         onChange={handleChange}
+//         placeholder="Type Something"
+//       />
+//       {isPending && <p>Updating...</p>}
+//       {list.map((item, index) => (
+//         <p key={index}>{item}</p>
+//       ))}
+//     </div>
+//   );
+// }
+// export default App;
+
+
+//30. Testing React Apps (Jest & React Testing Library)
+//Testing means:
+//👉 Checking if your React app works correctly before users use it.
+//📌 Jest
+//Jest is a testing framework.
+//👉 It runs your tests and tells you whether they pass or fail.
+//📌 React Testing Library (RTL)
+//React Testing Library helps you test React components the way a user uses them.
+
+
+//31. State Management in Complex Apps (Simple Explanation)
+//In big React apps, many components need to share data.
+//👉 State management helps us store and share data easily across the app.
+
+//31.1. Zustand (Very Simple & Lightweight)
+//👉 Zustand is a small and easy global state library
+//One store = shared data
+//Any component can use it directly
+
+//31.2 Recoil Simple Idea
+//👉 State is split into small atoms
+//👉 Components subscribe to only what they need
