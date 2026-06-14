@@ -1248,7 +1248,6 @@
 // }
 // export default App;
 
-
 //30. Testing React Apps (Jest & React Testing Library)
 //Testing means:
 //👉 Checking if your React app works correctly before users use it.
@@ -1257,7 +1256,6 @@
 //👉 It runs your tests and tells you whether they pass or fail.
 //📌 React Testing Library (RTL)
 //React Testing Library helps you test React components the way a user uses them.
-
 
 //31. State Management in Complex Apps (Simple Explanation)
 //In big React apps, many components need to share data.
@@ -1271,3 +1269,14 @@
 //31.2 Recoil Simple Idea
 //👉 State is split into small atoms
 //👉 Components subscribe to only what they need
+
+function App() {
+  return (
+    <div>
+      <h1>Hello React!</h1>
+      <p>Welcome to my first React app.</p>
+    </div>
+  );
+}
+
+export default App;
