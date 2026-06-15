@@ -1275,6 +1275,7 @@ function App() {
     <div>
       <h1>Hello React!</h1>
       <p>Welcome to my first React app.</p>
+      <p>Welcome to my first React app.</p>
     </div>
   );
 }
